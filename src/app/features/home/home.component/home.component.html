@@ -1,0 +1,51 @@
+<section class="home">
+  <div class="home__hero">
+    <p class="home__eyebrow">Angular + TMDB API</p>
+    <h1 class="home__title">Encuentra tu próxima película favorita</h1>
+    <p class="home__subtitle">
+      Busca películas, explora detalles y crea tu colección personal de favoritas.
+    </p>
+  </div>
+
+  <form class="search-form" (ngSubmit)="onSearch()">
+    <input
+      type="text"
+      [(ngModel)]="query"
+      name="query"
+      placeholder="Busca una película..."
+      class="search-form__input"
+    />
+
+    <button type="submit" class="search-form__button">
+      Buscar
+    </button>
+  </form>
+
+  <div *ngIf="isLoading" class="state-box">
+    Cargando películas...
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="state-box state-box--error">
+    {{ errorMessage }}
+  </div>
+
+  <div
+    *ngIf="hasSearched && !isLoading && !errorMessage && movies.length === 0"
+    class="state-box"
+  >
+    No se encontraron resultados para tu búsqueda.
+  </div>
+
+  <div *ngIf="!hasSearched && !isLoading" class="empty-hero">
+    <div class="empty-hero__icon">🎬</div>
+    <h2>Empieza escribiendo el título de una película</h2>
+    <p>Busca por nombre y descubre detalles, puntuaciones y más.</p>
+  </div>
+
+  <section *ngIf="movies.length > 0" class="movies-grid">
+    <app-movie-card
+      *ngFor="let movie of movies"
+      [movie]="movie"
+    ></app-movie-card>
+  </section>
+</section>

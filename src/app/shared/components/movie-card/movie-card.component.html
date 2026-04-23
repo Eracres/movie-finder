@@ -1,0 +1,18 @@
+<a class="movie-card" [routerLink]="['/movie', movie.id]">
+  <div class="movie-card__image-wrapper">
+    <img [src]="posterUrl" [alt]="movie.title" class="movie-card__image" />
+  </div>
+
+  <div class="movie-card__content">
+    <h3 class="movie-card__title">{{ movie.title }}</h3>
+
+    <p class="movie-card__meta">
+      <span>{{ movie.release_date || 'Fecha desconocida' }}</span>
+      <span>★ {{ movie.vote_average | number:'1.1-1' }}</span>
+    </p>
+
+    <p class="movie-card__overview">
+      {{ movie.overview || 'No hay descripción disponible.' }}
+    </p>
+  </div>
+</a>

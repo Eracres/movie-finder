@@ -1,0 +1,139 @@
+.home {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+
+  &__hero {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__eyebrow {
+    margin: 0;
+    color: #a855f7;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin: 0.75rem 0 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  &__subtitle {
+    width: min(700px, 100%);
+    margin: 1rem auto 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+.search-form {
+  display: flex;
+  gap: 1rem;
+  margin: 0 auto 2rem;
+  width: min(760px, 100%);
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.9rem;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 1rem 1.1rem;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    &:focus {
+      border-color: rgba(168, 85, 247, 0.8);
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  &__button {
+    border: none;
+    border-radius: 0.9rem;
+    background: linear-gradient(135deg, #9333ea, #a855f7);
+    color: #fff;
+    font-weight: 700;
+    padding: 0 1.4rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+  }
+}
+
+.state-box {
+  width: min(760px, 100%);
+  margin: 0 auto 2rem;
+  padding: 1rem 1.2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+
+  &--error {
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+  }
+}
+
+.empty-hero {
+  width: min(760px, 100%);
+  margin: 0 auto 2rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+
+  &__icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.35rem;
+  }
+
+  p {
+    margin: 0.85rem auto 0;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 500px;
+    line-height: 1.6;
+  }
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .search-form {
+    flex-direction: column;
+
+    &__button {
+      padding: 1rem 1.2rem;
+    }
+  }
+}
