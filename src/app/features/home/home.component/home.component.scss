@@ -39,8 +39,8 @@
   justify-content: center;
   gap: 0.75rem;
   flex-wrap: wrap;
-  margin: 0 auto 1.25rem;
   width: min(760px, 100%);
+  margin: 0 auto 1.25rem;
 
   button {
     border: 1px solid rgba(255, 255, 255, 0.14);
@@ -50,11 +50,7 @@
     padding: 0.7rem 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition:
-      transform 0.2s ease,
-      background 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease;
+    transition: 0.2s ease;
 
     &:hover {
       transform: translateY(-1px);
@@ -73,8 +69,8 @@
 .search-form {
   display: flex;
   gap: 1rem;
-  margin: 0 auto 2rem;
   width: min(760px, 100%);
+  margin: 0 auto 2rem;
 
   &__input {
     flex: 1;
@@ -85,7 +81,7 @@
     padding: 1rem 1.1rem;
     color: #fff;
     outline: none;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition: 0.2s ease;
 
     &::placeholder {
       color: rgba(255, 255, 255, 0.45);
@@ -105,11 +101,16 @@
     font-weight: 700;
     padding: 0 1.4rem;
     cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: 0.2s ease;
 
-    &:hover {
+    &:hover:not(:disabled) {
       transform: translateY(-1px);
       opacity: 0.95;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
     }
   }
 }
@@ -162,6 +163,35 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.25rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem auto 0;
+  color: rgba(255, 255, 255, 0.7);
+
+  button {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+  }
 }
 
 @media (max-width: 640px) {

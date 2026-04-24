@@ -1,62 +1,46 @@
-import { Injectable } from '@angular/core';
-import { SupabaseService } from './supabase.service';
-import { FavoriteMovie } from '../models/favorite-movie.model';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Movie } from '../models/movie.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FavoritesService {
-  constructor(private supabaseService: SupabaseService) {}
+  private readonly storageKey = 'movie-finder-favorites';
 
-  async getFavorites(): Promise<FavoriteMovie[]> {
-    const { data, error } = await this.supabaseService.supabase
-      .from('favorites')
-      .select('*')
-      .order('created_at', { ascending: false });
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
-    if (error) {
-      throw error;
-    }
-
-    return data ?? [];
+  private get canUseLocalStorage(): boolean {
+    return isPlatformBrowser(this.platformId);
   }
 
-  async addFavorite(movie: FavoriteMovie): Promise<FavoriteMovie> {
-    const { data, error } = await this.supabaseService.supabase
-      .from('favorites')
-      .insert([movie])
-      .select()
-      .single();
-
-    if (error) {
-      throw error;
+  getFavorites(): Movie[] {
+    if (!this.canUseLocalStorage) {
+      return [];
     }
 
-    return data;
+    const storedFavorites = localStorage.getItem(this.storageKey);
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
   }
 
-  async removeFavorite(movieId: number): Promise<void> {
-    const { error } = await this.supabaseService.supabase
-      .from('favorites')
-      .delete()
-      .eq('movie_id', movieId);
-
-    if (error) {
-      throw error;
-    }
+  isFavorite(movieId: number): boolean {
+    return this.getFavorites().some((movie) => movie.id === movieId);
   }
 
-  async isFavorite(movieId: number): Promise<boolean> {
-    const { data, error } = await this.supabaseService.supabase
-      .from('favorites')
-      .select('movie_id')
-      .eq('movie_id', movieId)
-      .maybeSingle();
-
-    if (error) {
-      throw error;
+  toggleFavorite(movie: Movie): Movie[] {
+    if (!this.canUseLocalStorage) {
+      return [];
     }
 
-    return Boolean(data);
+    const favorites = this.getFavorites();
+    const exists = favorites.some((item) => item.id === movie.id);
+
+    const updatedFavorites = exists
+      ? favorites.filter((item) => item.id !== movie.id)
+      : [...favorites, movie];
+
+    localStorage.setItem(this.storageKey, JSON.stringify(updatedFavorites));
+
+    return updatedFavorites;
   }
 }

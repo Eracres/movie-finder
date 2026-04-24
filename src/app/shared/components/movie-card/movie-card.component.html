@@ -1,18 +1,43 @@
-<a class="movie-card" [routerLink]="['/movie', movie.id]">
-  <div class="movie-card__image-wrapper">
-    <img [src]="posterUrl" [alt]="movie.title" class="movie-card__image" />
-  </div>
+<article class="movie-card">
+  <a [routerLink]="detailUrl" class="movie-card__link">
+    <div class="movie-card__poster-wrapper">
+      <img
+        [src]="posterUrl"
+        [alt]="movie.title"
+        class="movie-card__poster"
+      />
 
-  <div class="movie-card__content">
-    <h3 class="movie-card__title">{{ movie.title }}</h3>
+      <span class="movie-card__badge">
+        {{ movie.media_type === 'movie' ? '🎬 Película' : '📺 Serie' }}
+      </span>
 
-    <p class="movie-card__meta">
-      <span>{{ movie.release_date || 'Fecha desconocida' }}</span>
-      <span>★ {{ movie.vote_average | number:'1.1-1' }}</span>
-    </p>
+      <button
+        type="button"
+        class="movie-card__favorite"
+        [class.movie-card__favorite--active]="isFavorite"
+        (click)="onToggleFavorite($event)"
+        [attr.aria-label]="isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+      >
+        {{ isFavorite ? '❤️' : '🤍' }}
+      </button>
+    </div>
 
-    <p class="movie-card__overview">
-      {{ movie.overview || 'No hay descripción disponible.' }}
-    </p>
-  </div>
-</a>
+    <div class="movie-card__content">
+      <h3 class="movie-card__title">{{ movie.title }}</h3>
+
+      <p class="movie-card__meta">
+        <span *ngIf="movie.release_date">
+          {{ movie.release_date | date: 'yyyy' }}
+        </span>
+
+        <span *ngIf="movie.vote_average">
+          ⭐ {{ movie.vote_average | number: '1.1-1' }}
+        </span>
+      </p>
+
+      <p class="movie-card__overview">
+        {{ movie.overview }}
+      </p>
+    </div>
+  </a>
+</article>

@@ -1,5 +1,4 @@
 export type SearchType = 'movie' | 'tv' | 'multi';
-
 export type MediaType = 'movie' | 'tv';
 
 export interface Movie {
