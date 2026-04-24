@@ -1,0 +1,124 @@
+.detail {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+
+  &__back {
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__state {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 1rem;
+    color: rgba(255, 255, 255, 0.72);
+    text-align: center;
+
+    &--error {
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: minmax(220px, 320px) 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  &__poster-wrapper {
+    overflow: hidden;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #111827;
+  }
+
+  &__poster {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__info {
+    padding: 1rem 0;
+  }
+
+  &__badge {
+    display: inline-flex;
+    border-radius: 999px;
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    padding: 0.45rem 0.8rem;
+    color: #d8b4fe;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+
+  &__title {
+    margin: 1rem 0 0;
+    color: #fff;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  &__overview {
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  &__favorite {
+    margin-top: 2rem;
+    border: none;
+    border-radius: 0.9rem;
+    background: linear-gradient(135deg, #9333ea, #a855f7);
+    color: #fff;
+    padding: 0.9rem 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    &--active {
+      background: linear-gradient(135deg, #be123c, #f43f5e);
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .detail {
+    &__content {
+      grid-template-columns: 1fr;
+    }
+
+    &__poster-wrapper {
+      max-width: 320px;
+    }
+  }
+}

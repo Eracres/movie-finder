@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize, take, timeout } from 'rxjs';
 import { MovieService } from '../../../core/services/movie.service';
 import { FavoritesService } from '../../../core/services/favorites.service';
+import { SearchStateService } from '../../../core/services/search-state.service';
 import { Movie, SearchType } from '../../../core/models/movie.model';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card.component';
 
@@ -14,7 +15,7 @@ import { MovieCardComponent } from '../../../shared/components/movie-card/movie-
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   query = '';
   searchType: SearchType = 'movie';
   movies: Movie[] = [];
@@ -30,10 +31,26 @@ export class HomeComponent {
   constructor(
     private movieService: MovieService,
     private favoritesService: FavoritesService,
+    private searchStateService: SearchStateService,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone
   ) {
     this.favorites = this.favoritesService.getFavorites();
+  }
+
+  ngOnInit(): void {
+    const savedState = this.searchStateService.getState();
+
+    if (!savedState) return;
+
+    this.query = savedState.query;
+    this.searchType = savedState.searchType;
+    this.movies = savedState.movies;
+    this.currentPage = savedState.currentPage;
+    this.totalPages = savedState.totalPages;
+    this.hasSearched = savedState.hasSearched;
+
+    this.cdr.detectChanges();
   }
 
   setSearchType(type: SearchType): void {
@@ -55,6 +72,7 @@ export class HomeComponent {
       this.currentPage = 1;
       this.totalPages = 0;
       this.isLoading = false;
+      this.searchStateService.clearState();
       this.cdr.detectChanges();
       return;
     }
@@ -82,6 +100,16 @@ export class HomeComponent {
           this.ngZone.run(() => {
             this.movies = response.results;
             this.totalPages = response.total_pages;
+
+            this.searchStateService.saveState({
+              query: this.query,
+              searchType: this.searchType,
+              movies: this.movies,
+              currentPage: this.currentPage,
+              totalPages: this.totalPages,
+              hasSearched: this.hasSearched,
+            });
+
             this.cdr.detectChanges();
           });
         },

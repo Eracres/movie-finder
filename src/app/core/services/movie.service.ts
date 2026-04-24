@@ -71,9 +71,17 @@ export class MovieService {
   }
 
   getMovieDetails(id: string): Observable<Movie> {
-    return this.http.get<Movie>(
-      `${this.apiUrl}/movie/${id}?api_key=${this.apiKey}&language=es-ES`
-    );
+    return this.getMediaDetails(id, 'movie');
+  }
+
+  getMediaDetails(id: string, type: MediaType): Observable<Movie> {
+    const endpoint = type === 'tv' ? 'tv' : 'movie';
+
+    return this.http
+      .get<TmdbRawResult>(
+        `${this.apiUrl}/${endpoint}/${id}?api_key=${this.apiKey}&language=es-ES`
+      )
+      .pipe(map((item) => this.normalizeResult(item, type)));
   }
 
   getPosterUrl(path: string | null): string {
@@ -127,12 +135,7 @@ export class MovieService {
     );
   }
 
-  private normalizeResult(
-    item: TmdbRawResult,
-    searchType: Exclude<SearchType, 'multi'>
-  ): Movie {
-    const mediaType: MediaType = searchType;
-
+  private normalizeResult(item: TmdbRawResult, mediaType: MediaType): Movie {
     return {
       id: item.id,
       title: item.title ?? item.name ?? 'Sin título',

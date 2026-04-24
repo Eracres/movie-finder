@@ -1,1 +1,54 @@
-<p>movie-detail.component works!</p>
+<section class="detail">
+  <button type="button" class="detail__back" (click)="goBack()">
+    ← Volver
+  </button>
+
+  <div *ngIf="isLoading" class="detail__state">
+    Cargando detalle...
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="detail__state detail__state--error">
+    {{ errorMessage }}
+  </div>
+
+  <article *ngIf="movie && !isLoading" class="detail__content">
+    <div class="detail__poster-wrapper">
+      <img
+        [src]="posterUrl"
+        [alt]="movie.title"
+        class="detail__poster"
+      />
+    </div>
+
+    <div class="detail__info">
+      <span class="detail__badge">
+        {{ movie.media_type === 'movie' ? '🎬 Película' : '📺 Serie' }}
+      </span>
+
+      <h1 class="detail__title">{{ movie.title }}</h1>
+
+      <div class="detail__meta">
+        <span *ngIf="movie.release_date">
+          {{ movie.release_date | date: 'yyyy' }}
+        </span>
+
+        <span *ngIf="movie.vote_average">
+          ⭐ {{ movie.vote_average | number: '1.1-1' }}
+        </span>
+      </div>
+
+      <p class="detail__overview">
+        {{ movie.overview }}
+      </p>
+
+      <button
+        type="button"
+        class="detail__favorite"
+        [class.detail__favorite--active]="isFavorite"
+        (click)="toggleFavorite()"
+      >
+        {{ isFavorite ? '❤️ Quitar de favoritos' : '🤍 Añadir a favoritos' }}
+      </button>
+    </div>
+  </article>
+</section>

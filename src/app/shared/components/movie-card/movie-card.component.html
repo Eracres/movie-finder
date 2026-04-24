@@ -1,5 +1,9 @@
 <article class="movie-card">
-  <a [routerLink]="detailUrl" class="movie-card__link">
+  <a
+    [routerLink]="detailUrl"
+    [queryParams]="queryParams"
+    class="movie-card__link"
+  >
     <div class="movie-card__poster-wrapper">
       <img
         [src]="posterUrl"

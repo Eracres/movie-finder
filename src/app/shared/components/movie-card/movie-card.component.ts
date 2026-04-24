@@ -24,9 +24,13 @@ export class MovieCardComponent {
   }
 
   get detailUrl(): string {
-    return this.movie.media_type === 'tv'
-      ? `/movie/${this.movie.id}?type=tv`
-      : `/movie/${this.movie.id}?type=movie`;
+    return `/movie/${this.movie.id}`;
+  }
+
+  get queryParams(): { type: string } {
+    return {
+      type: this.movie.media_type,
+    };
   }
 
   onToggleFavorite(event: MouseEvent): void {
