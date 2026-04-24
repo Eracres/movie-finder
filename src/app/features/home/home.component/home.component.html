@@ -1,10 +1,36 @@
 <section class="home">
   <div class="home__hero">
     <p class="home__eyebrow">Angular + TMDB API</p>
-    <h1 class="home__title">Encuentra tu próxima película favorita</h1>
+    <h1 class="home__title">Encuentra tu próxima película o serie favorita</h1>
     <p class="home__subtitle">
-      Busca películas, explora detalles y crea tu colección personal de favoritas.
+      Busca películas y series, explora detalles y crea tu colección personal de favoritas.
     </p>
+  </div>
+
+  <div class="search-type">
+    <button
+      type="button"
+      [class.active]="searchType === 'movie'"
+      (click)="setSearchType('movie')"
+    >
+      Películas
+    </button>
+
+    <button
+      type="button"
+      [class.active]="searchType === 'tv'"
+      (click)="setSearchType('tv')"
+    >
+      Series
+    </button>
+
+    <button
+      type="button"
+      [class.active]="searchType === 'multi'"
+      (click)="setSearchType('multi')"
+    >
+      Todo
+    </button>
   </div>
 
   <form class="search-form" (ngSubmit)="onSearch()">
@@ -12,7 +38,7 @@
       type="text"
       [(ngModel)]="query"
       name="query"
-      placeholder="Busca una película..."
+      placeholder="Busca una película o serie..."
       class="search-form__input"
     />
 
@@ -22,7 +48,7 @@
   </form>
 
   <div *ngIf="isLoading" class="state-box">
-    Cargando películas...
+    Cargando resultados...
   </div>
 
   <div *ngIf="errorMessage && !isLoading" class="state-box state-box--error">
@@ -38,7 +64,7 @@
 
   <div *ngIf="!hasSearched && !isLoading" class="empty-hero">
     <div class="empty-hero__icon">🎬</div>
-    <h2>Empieza escribiendo el título de una película</h2>
+    <h2>Empieza escribiendo el título de una película o serie</h2>
     <p>Busca por nombre y descubre detalles, puntuaciones y más.</p>
   </div>
 

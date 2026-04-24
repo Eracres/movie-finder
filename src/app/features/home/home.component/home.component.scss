@@ -34,6 +34,42 @@
   }
 }
 
+.search-type {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0 auto 1.25rem;
+  width: min(760px, 100%);
+
+  button {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.72);
+    padding: 0.7rem 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #9333ea, #a855f7);
+      border-color: rgba(168, 85, 247, 0.9);
+      color: #fff;
+    }
+  }
+}
+
 .search-form {
   display: flex;
   gap: 1rem;
