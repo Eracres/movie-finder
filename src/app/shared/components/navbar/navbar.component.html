@@ -1,0 +1,22 @@
+<header class="navbar">
+  <a routerLink="/" class="navbar__brand">
+    MovieFinder
+  </a>
+
+  <nav class="navbar__links">
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Inicio
+    </a>
+
+    <a
+      routerLink="/favorites"
+      routerLinkActive="active"
+    >
+      Favoritos
+    </a>
+  </nav>
+</header>
